@@ -10,7 +10,9 @@ app.use(bodyParser.json());
 const MongoClient = require('mongodb').MongoClient;
 const createRouter = require('./helpers/create_router.js');
 
-MongoClient.connect('mongodb://localhost:27017')
+// MongoClient.connect('mongodb://localhost:27017')
+
+MongoClient.connect('mongodb+srv://stevem:pearljam@runningtrackercluster.gcalw.mongodb.net/test')
   .then((client) => {
     const db = client.db('running_tracker');
     const runsCollection = db.collection('runs');
@@ -39,11 +41,12 @@ MongoClient.connect('mongodb://localhost:27017')
         res.send("please make sure run has name and date");
       }
     });
-
-    app.use('/api/runs', runsRouter);
+    // app.use('/api/runs', runsRouter);
+    app.use('/', runsRouter);
   })
   .catch(console.error);
 
-app.listen(5000, function() {
-  console.log(`Run tracker server running on port ${this.address().port}`);
+const port = process.env.PORT || 5000;
+app.listen(port, function() {
+  console.log(`Server started successfully.`);
 });
