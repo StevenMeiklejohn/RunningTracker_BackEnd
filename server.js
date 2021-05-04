@@ -41,6 +41,22 @@ MongoClient.connect('mongodb+srv://stevem:pearljam@runningtrackercluster.gcalw.m
         res.send("please make sure run has name and date");
       }
     });
+
+    app.put('/api/runs/:id', (req, res) => {
+      const id = req.params.id;
+      const updatedData = req.body;
+      delete updatedData._id;
+  
+      collection
+      .updateOne({ _id: ObjectID(id) }, { $set: updatedData })
+      .then(result => {
+        res.json(result);
+      })
+      .catch((err) => {
+        res.status(500);
+        res.json({ status: 500, error: err });
+      });
+    });
     // app.use('/api/runs', runsRouter);
     app.use('/', runsRouter);
   })
