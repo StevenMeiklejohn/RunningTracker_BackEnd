@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const ObjectID = require('mongodb').ObjectID;
 
 const cors = require("cors");
 
@@ -47,7 +48,7 @@ MongoClient.connect('mongodb+srv://stevem:pearljam@runningtrackercluster.gcalw.m
       const updatedData = req.body;
       delete updatedData._id;
   
-      collection
+      runsCollection
       .updateOne({ _id: ObjectID(id) }, { $set: updatedData })
       .then(result => {
         res.json(result);
