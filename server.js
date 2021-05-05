@@ -43,7 +43,7 @@ MongoClient.connect('mongodb+srv://stevem:pearljam@runningtrackercluster.gcalw.m
       }
     });
 
-    app.put('/api/runs/:id', (req, res) => {
+    app.patch('/api/runs/:id', (req, res) => {
       const id = req.params.id;
       const updatedData = req.body;
       delete updatedData._id;
